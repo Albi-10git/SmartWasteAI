@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartWasteAI</title>
+    <meta
+        name="description"
+        content="SmartWasteAI helps communities identify waste, improve segregation, and track sustainability impact with AI-powered workflows.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: "#123524",
+                        moss: "#2f6b45",
+                        lime: "#9fe870",
+                        mint: "#daf7c9",
+                        sand: "#f5efdf",
+                        ink: "#0f1720"
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"],
+                        sans: ["Manrope", "sans-serif"]
+                    },
+                    boxShadow: {
+                        glow: "0 30px 80px rgba(18, 53, 36, 0.18)"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        :root {
+            color-scheme: light;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(159, 232, 112, 0.22), transparent 28%),
+                radial-gradient(circle at top right, rgba(47, 107, 69, 0.16), transparent 30%),
+                linear-gradient(180deg, #f8f7f1 0%, #eef6e8 100%);
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.72);
+        }
+
+        .section-grid {
+            background-image:
+                linear-gradient(rgba(18, 53, 36, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(18, 53, 36, 0.04) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        .pulse-ring::after {
+            content: "";
+            position: absolute;
+            inset: -10px;
+            border: 1px solid rgba(159, 232, 112, 0.45);
+            border-radius: 9999px;
+            animation: pulse-ring 2.4s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.92);
+                opacity: 0.85;
+            }
+            100% {
+                transform: scale(1.14);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-ink antialiased">
+    <header class="sticky top-0 z-50 border-b border-white/60 bg-sand/80 backdrop-blur-xl">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+            <a href="#top" class="flex items-center gap-3">
+                <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-forest text-white shadow-glow">
+                    <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M12 3v4"></path>
+                        <path d="M12 17v4"></path>
+                        <path d="M5.6 7.1l2.9 2.1"></path>
+                        <path d="M15.5 14.8l2.9 2.1"></path>
+                        <path d="M4 12h4"></path>
+                        <path d="M16 12h4"></path>
+                        <path d="M5.6 16.9l2.9-2.1"></path>
+                        <path d="M15.5 9.2l2.9-2.1"></path>
+                        <circle cx="12" cy="12" r="3.3"></circle>
+                    </svg>
+                </span>
+                <div>
+                    <p class="font-display text-lg font-bold tracking-tight text-forest">SmartWasteAI</p>
+                    <p class="text-xs font-medium uppercase tracking-[0.28em] text-moss">Clean city intelligence</p>
+                </div>
+            </a>
+
+            <nav class="hidden items-center gap-8 text-sm font-semibold text-forest md:flex">
+                <a href="#features" class="transition hover:text-moss">Features</a>
+                <a href="#workflow" class="transition hover:text-moss">Workflow</a>
+                <a href="#impact" class="transition hover:text-moss">Impact</a>
+                <a href="#contact" class="transition hover:text-moss">Contact</a>
+            </nav>
+
+            <div class="hidden md:block">
+                <a
+                    href="#demo"
+                    class="rounded-full bg-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-moss">
+                    Launch Demo
+                </a>
+            </div>
+
+            <button
+                id="menu-toggle"
+                type="button"
+                class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-forest/15 bg-white text-forest md:hidden"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
+                aria-label="Toggle navigation">
+                <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M4 7h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 17h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden border-t border-forest/10 bg-sand/95 px-6 py-4 md:hidden">
+            <div class="flex flex-col gap-4 text-sm font-semibold text-forest">
+                <a href="#features" class="transition hover:text-moss">Features</a>
+                <a href="#workflow" class="transition hover:text-moss">Workflow</a>
+                <a href="#impact" class="transition hover:text-moss">Impact</a>
+                <a href="#contact" class="transition hover:text-moss">Contact</a>
+                <a href="#demo" class="rounded-full bg-forest px-5 py-3 text-center text-white transition hover:bg-moss">
+                    Launch Demo
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main id="top">
+        <section class="relative overflow-hidden px-6 pb-20 pt-14 md:pb-28 md:pt-20">
+            <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+                <div>
+                    <div class="mb-6 inline-flex items-center gap-3 rounded-full border border-forest/10 bg-white/80 px-4 py-2 text-sm font-semibold text-moss">
+                        <span class="relative pulse-ring flex h-2.5 w-2.5 rounded-full bg-lime"></span>
+                        AI-guided segregation for smarter neighborhoods
+                    </div>
+
+                    <h1 class="max-w-3xl font-display text-5xl font-bold leading-[1.02] text-forest md:text-6xl lg:text-7xl">
+                        Waste intelligence that feels useful from the first scan.
+                    </h1>
+
+                    <p class="mt-6 max-w-2xl text-lg leading-8 text-forest/75 md:text-xl">
+                        Help households, campuses, and local bodies classify waste, guide recycling actions, and measure environmental impact in one confident interface.
+                    </p>
+
+                    <div class="mt-9 flex flex-col gap-4 sm:flex-row">
+                        <a
+                            href="#demo"
+                            class="rounded-full bg-forest px-7 py-4 text-center font-semibold text-white transition hover:bg-moss">
+                            Explore Dashboard
+                        </a>
+                        <a
+                            href="#features"
+                            class="rounded-full border border-forest/15 bg-white/80 px-7 py-4 text-center font-semibold text-forest transition hover:border-moss hover:text-moss">
+                            See Key Features
+                        </a>
+                    </div>
+
+                    <div class="mt-10 grid gap-4 sm:grid-cols-3">
+                        <div class="rounded-3xl border border-white/70 bg-white/75 p-5 shadow-lg shadow-forest/5">
+                            <p class="text-3xl font-extrabold text-forest">95%</p>
+                            <p class="mt-2 text-sm font-medium text-forest/70">Classification confidence for supported categories</p>
+                        </div>
+                        <div class="rounded-3xl border border-white/70 bg-white/75 p-5 shadow-lg shadow-forest/5">
+                            <p class="text-3xl font-extrabold text-forest">24/7</p>
+                            <p class="mt-2 text-sm font-medium text-forest/70">Always-on guidance for residents and staff</p>
+                        </div>
+                        <div class="rounded-3xl border border-white/70 bg-white/75 p-5 shadow-lg shadow-forest/5">
+                            <p class="text-3xl font-extrabold text-forest">3x</p>
+                            <p class="mt-2 text-sm font-medium text-forest/70">Faster reporting from issue detection to action</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="demo" class="relative">
+                    <div class="absolute -left-8 top-10 hidden h-32 w-32 rounded-full bg-lime/30 blur-3xl md:block"></div>
+                    <div class="absolute -right-10 bottom-8 h-36 w-36 rounded-full bg-moss/20 blur-3xl"></div>
+
+                    <div class="glass-panel relative rounded-[2rem] border border-white/80 p-5 shadow-glow">
+                        <div class="rounded-[1.7rem] bg-forest p-6 text-white">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm uppercase tracking-[0.28em] text-lime/80">Live overview</p>
+                                    <h2 class="mt-2 font-display text-2xl font-bold">City Waste Command Panel</h2>
+                                </div>
+                                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-lime">Realtime</span>
+                            </div>
+
+                            <div class="mt-8 grid gap-4 sm:grid-cols-2">
+                                <div class="rounded-3xl bg-white/8 p-5">
+                                    <p class="text-sm text-white/65">Wet waste identified</p>
+                                    <p class="mt-2 text-4xl font-bold">1,280 kg</p>
+                                    <p class="mt-3 text-sm text-lime">+12% vs last week</p>
+                                </div>
+                                <div class="rounded-3xl bg-lime p-5 text-forest">
+                                    <p class="text-sm font-semibold">Action queue</p>
+                                    <p class="mt-2 text-4xl font-bold">18</p>
+                                    <p class="mt-3 text-sm font-semibold">high priority pickups</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 rounded-3xl bg-white/8 p-5">
+                                <div class="flex items-center justify-between text-sm text-white/70">
+                                    <span>Segregation performance</span>
+                                    <span>82/100</span>
+                                </div>
+                                <div class="mt-3 h-3 rounded-full bg-white/10">
+                                    <div class="h-3 w-[82%] rounded-full bg-gradient-to-r from-lime to-mint"></div>
+                                </div>
+                                <div class="mt-5 grid gap-4 sm:grid-cols-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-[0.22em] text-white/45">Organic</p>
+                                        <p class="mt-1 text-xl font-bold">44%</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs uppercase tracking-[0.22em] text-white/45">Recyclable</p>
+                                        <p class="mt-1 text-xl font-bold">37%</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs uppercase tracking-[0.22em] text-white/45">Hazardous</p>
+                                        <p class="mt-1 text-xl font-bold">19%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 grid gap-4 sm:grid-cols-2">
+                            <div class="rounded-3xl border border-forest/10 bg-white p-5">
+                                <p class="text-sm font-semibold text-forest/55">Resident tip</p>
+                                <p class="mt-2 text-base font-semibold text-forest">
+                                    Food-stained paper should be routed to compost, not dry recycling.
+                                </p>
+                            </div>
+                            <div class="rounded-3xl border border-forest/10 bg-white p-5">
+                                <p class="text-sm font-semibold text-forest/55">Collection ETA</p>
+                                <p class="mt-2 text-base font-semibold text-forest">
+                                    Route B truck reaches Sector 4 in 18 minutes.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section-grid px-6 py-20">
+            <div class="mx-auto max-w-7xl">
+                <div class="max-w-2xl">
+                    <p class="text-sm font-bold uppercase tracking-[0.28em] text-moss">Core platform</p>
+                    <h2 class="mt-3 font-display text-4xl font-bold text-forest md:text-5xl">
+                        A sharper interface for the entire waste management cycle.
+                    </h2>
+                    <p class="mt-5 text-lg leading-8 text-forest/70">
+                        The experience is designed to guide people quickly, reduce confusion, and turn environmental action into a repeatable habit.
+                    </p>
+                </div>
+
+                <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+                    <article class="rounded-[1.8rem] border border-forest/10 bg-white/80 p-7 shadow-lg shadow-forest/5">
+                        <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-mint text-forest">
+                            <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M8 7h8"></path>
+                                <path d="M8 12h6"></path>
+                                <path d="M8 17h4"></path>
+                                <path d="M5 4h14v16H5z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-forest">Waste Classification</h3>
+                        <p class="mt-3 leading-7 text-forest/70">
+                            Instantly identify dry, wet, recyclable, and hazardous materials with clear disposal next steps.
+                        </p>
+                    </article>
+
+                    <article class="rounded-[1.8rem] border border-forest/10 bg-white/80 p-7 shadow-lg shadow-forest/5">
+                        <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-lime/35 text-forest">
+                            <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M12 3l7 4v5c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V7l7-4z"></path>
+                                <path d="M9.5 12l1.7 1.7L15 10"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-forest">AI Disposal Guidance</h3>
+                        <p class="mt-3 leading-7 text-forest/70">
+                            Show users what to rinse, flatten, compost, or isolate before a waste item is discarded.
+                        </p>
+                    </article>
+
+                    <article class="rounded-[1.8rem] border border-forest/10 bg-white/80 p-7 shadow-lg shadow-forest/5">
+                        <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-sand text-forest">
+                            <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M4 18l5.5-5.5 3 3L20 8"></path>
+                                <path d="M15 8h5v5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-forest">Impact Analytics</h3>
+                        <p class="mt-3 leading-7 text-forest/70">
+                            Track diversion rates, cleanliness scores, and pickup performance in a simple visual dashboard.
+                        </p>
+                    </article>
+
+                    <article class="rounded-[1.8rem] border border-forest/10 bg-white/80 p-7 shadow-lg shadow-forest/5">
+                        <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-mint text-forest">
+                            <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M12 21c4.4 0 8-3.6 8-8 0-6-8-11-8-11S4 7 4 13c0 4.4 3.6 8 8 8z"></path>
+                                <path d="M9 13c.6 1.2 1.7 2 3 2 1.9 0 3.5-1.6 3.5-3.5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-forest">Community Reporting</h3>
+                        <p class="mt-3 leading-7 text-forest/70">
+                            Let residents flag overflow zones, illegal dumping, and missed pickups with stronger follow-through.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="workflow" class="px-6 py-20">
+            <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+                <div class="rounded-[2rem] bg-forest p-8 text-white shadow-glow md:p-10">
+                    <p class="text-sm font-bold uppercase tracking-[0.28em] text-lime/80">Why it works</p>
+                    <h2 class="mt-4 font-display text-4xl font-bold leading-tight">Built to guide action, not just display data.</h2>
+                    <p class="mt-5 max-w-xl text-base leading-8 text-white/72">
+                        Good waste software should reduce hesitation. This layout keeps priority actions visible, shortens decision time, and makes the system feel trustworthy on both mobile and desktop.
+                    </p>
+
+                    <div class="mt-10 space-y-5">
+                        <div class="rounded-3xl border border-white/10 bg-white/6 p-5">
+                            <p class="text-sm font-semibold text-lime">1. Scan or report</p>
+                            <p class="mt-2 text-white/80">Upload an image, describe the item, or flag a waste issue from the field.</p>
+                        </div>
+                        <div class="rounded-3xl border border-white/10 bg-white/6 p-5">
+                            <p class="text-sm font-semibold text-lime">2. Get the right action</p>
+                            <p class="mt-2 text-white/80">The assistant explains how to separate, where to send it, and what matters most.</p>
+                        </div>
+                        <div class="rounded-3xl border border-white/10 bg-white/6 p-5">
+                            <p class="text-sm font-semibold text-lime">3. Track outcomes</p>
+                            <p class="mt-2 text-white/80">Managers see completion, trends, and high-risk zones without hunting through clutter.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid gap-6 md:grid-cols-2">
+                    <article class="rounded-[1.8rem] border border-forest/10 bg-white p-7 shadow-lg shadow-forest/5">
+                        <p class="text-sm font-bold uppercase tracking-[0.24em] text-moss">Faster onboarding</p>
+                        <h3 class="mt-3 text-2xl font-bold text-forest">Plain-language prompts</h3>
+                        <p class="mt-4 leading-7 text-forest/70">
+                            People do not need technical training to use the product. The screen speaks in simple, direct actions.
+                        </p>
+                    </article>
+
+                    <article class="rounded-[1.8rem] border border-forest/10 bg-white p-7 shadow-lg shadow-forest/5">
+                        <p class="text-sm font-bold uppercase tracking-[0.24em] text-moss">Better trust</p>
+                        <h3 class="mt-3 text-2xl font-bold text-forest">Visible confidence levels</h3>
+                        <p class="mt-4 leading-7 text-forest/70">
+                            Recommendations feel more credible when the interface shows certainty, urgency, and next-step context.
+                        </p>
+                    </article>
+
+                    <article class="rounded-[1.8rem] border border-forest/10 bg-white p-7 shadow-lg shadow-forest/5 md:col-span-2">
+                        <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+                            <div class="max-w-xl">
+                                <p class="text-sm font-bold uppercase tracking-[0.24em] text-moss">Operator focus</p>
+                                <h3 class="mt-3 text-2xl font-bold text-forest">Designed for high-signal decisions</h3>
+                                <p class="mt-4 leading-7 text-forest/70">
+                                    The new page structure separates strategic metrics from everyday tasks, so users can move from awareness to action without friction.
+                                </p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 self-start sm:min-w-[260px]">
+                                <div class="flex min-h-[132px] flex-col justify-between rounded-3xl bg-mint p-5">
+                                    <p class="text-sm font-semibold leading-6 text-forest/60">Pickup efficiency</p>
+                                    <p class="mt-4 text-4xl font-bold leading-none text-forest">+31%</p>
+                                </div>
+                                <div class="flex min-h-[132px] flex-col justify-between rounded-3xl bg-sand p-5">
+                                    <p class="text-sm font-semibold leading-6 text-forest/60">Contamination</p>
+                                    <p class="mt-4 text-4xl font-bold leading-none text-forest">-18%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="px-6 pb-20">
+            <div class="mx-auto max-w-7xl rounded-[2.2rem] border border-forest/10 bg-white/75 p-8 shadow-lg shadow-forest/5 md:p-10">
+                <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+                    <div>
+                        <p class="text-sm font-bold uppercase tracking-[0.28em] text-moss">Impact snapshot</p>
+                        <h2 class="mt-3 font-display text-4xl font-bold text-forest md:text-5xl">
+                            Cleaner systems are easier to believe in when progress is visible.
+                        </h2>
+                    </div>
+                    <p class="text-lg leading-8 text-forest/70">
+                        This layout gives the project a stronger product identity and a more professional first impression for demos, submissions, and stakeholder reviews.
+                    </p>
+                </div>
+
+                <div class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+                    <div class="rounded-[1.8rem] bg-forest p-6 text-white">
+                        <p class="text-sm uppercase tracking-[0.2em] text-lime/80">Active users</p>
+                        <p class="mt-4 text-4xl font-bold">500+</p>
+                        <p class="mt-2 text-sm text-white/70">Students, households, and local staff</p>
+                    </div>
+                    <div class="rounded-[1.8rem] bg-mint p-6 text-forest">
+                        <p class="text-sm uppercase tracking-[0.2em] text-forest/60">Reports resolved</p>
+                        <p class="mt-4 text-4xl font-bold">1,200+</p>
+                        <p class="mt-2 text-sm text-forest/70">Escalations moved through faster</p>
+                    </div>
+                    <div class="rounded-[1.8rem] bg-sand p-6 text-forest">
+                        <p class="text-sm uppercase tracking-[0.2em] text-forest/60">Eco actions</p>
+                        <p class="mt-4 text-4xl font-bold">800+</p>
+                        <p class="mt-2 text-sm text-forest/70">Recycling and composting milestones</p>
+                    </div>
+                    <div class="rounded-[1.8rem] border border-forest/10 bg-white p-6 text-forest">
+                        <p class="text-sm uppercase tracking-[0.2em] text-forest/60">Accuracy trend</p>
+                        <p class="mt-4 text-4xl font-bold">95%</p>
+                        <p class="mt-2 text-sm text-forest/70">Model-assisted segregation guidance</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="border-t border-forest/10 bg-forest px-6 py-12 text-white">
+        <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.6fr_0.6fr]">
+            <section>
+                <h2 class="font-display text-3xl font-bold">SmartWasteAI</h2>
+                <p class="mt-4 max-w-xl leading-8 text-white/70">
+                    A more usable, modern interface for AI-powered waste classification, reporting, and sustainability tracking.
+                </p>
+            </section>
+
+            <section>
+                <h3 class="text-sm font-bold uppercase tracking-[0.24em] text-lime/80">Navigation</h3>
+                <div class="mt-4 flex flex-col gap-3 text-white/75">
+                    <a href="#features" class="transition hover:text-white">Features</a>
+                    <a href="#workflow" class="transition hover:text-white">Workflow</a>
+                    <a href="#impact" class="transition hover:text-white">Impact</a>
+                </div>
+            </section>
+
+            <section>
+                <h3 class="text-sm font-bold uppercase tracking-[0.24em] text-lime/80">Contact</h3>
+                <div class="mt-4 space-y-3 text-white/75">
+                    <p>smartwaste@gmail.com</p>
+                    <p>+91 9876543210</p>
+                    <p>Built for cleaner, greener communities.</p>
+                </div>
+            </section>
+        </div>
+
+        <div class="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-6 text-sm text-white/55">
+            <p>&copy; 2026 SmartWasteAI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        menuToggle.addEventListener("click", () => {
+            const isOpen = !mobileMenu.classList.contains("hidden");
+            mobileMenu.classList.toggle("hidden");
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        });
+
+        mobileMenu.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.add("hidden");
+                menuToggle.setAttribute("aria-expanded", "false");
+            });
+        });
+    </script>
+</body>
+</html>
