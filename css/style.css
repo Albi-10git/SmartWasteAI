@@ -1,0 +1,64 @@
+:root {
+    color-scheme: light;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        radial-gradient(circle at top left,
+            rgba(159, 232, 112, 0.22),
+            transparent 28%),
+        radial-gradient(circle at top right,
+            rgba(47, 107, 69, 0.16),
+            transparent 30%),
+        linear-gradient(
+            180deg,
+            #f8f7f1 0%,
+            #eef6e8 100%
+        );
+}
+
+.glass-panel {
+    backdrop-filter: blur(18px);
+    background: rgba(255,255,255,0.72);
+}
+
+.section-grid {
+    background-image:
+        linear-gradient(
+            rgba(18,53,36,0.04) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(18,53,36,0.04) 1px,
+            transparent 1px
+        );
+
+    background-size: 28px 28px;
+}
+
+.pulse-ring::after {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    border: 1px solid rgba(159,232,112,0.45);
+    border-radius: 9999px;
+    animation: pulse-ring 2.4s infinite;
+}
+
+@keyframes pulse-ring {
+
+    0% {
+        transform: scale(0.92);
+        opacity: 0.85;
+    }
+
+    100% {
+        transform: scale(1.14);
+        opacity: 0;
+    }
+}
