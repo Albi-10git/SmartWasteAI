@@ -171,3 +171,165 @@ document.getElementById("notifyBtn")
         );
     }
 });
+/* =========================
+   WASTE COMPLAINT FORM VALIDATION
+========================= */
+
+document.getElementById("wasteForm")
+.addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+    const name =
+    document.getElementById("citizenName").value.trim();
+
+    const wasteType =
+    document.getElementById("wasteType").value;
+
+    const location =
+    document.getElementById("wasteLocation").value.trim();
+
+    const description =
+    document.getElementById("description").value.trim();
+
+    const message =
+    document.getElementById("formMessage");
+
+    if(name === ""){
+
+        message.innerHTML =
+        "Please enter your name.";
+
+        message.style.color = "red";
+
+        return;
+    }
+
+    if(wasteType === ""){
+
+        message.innerHTML =
+        "Please select a waste type.";
+
+        message.style.color = "red";
+
+        return;
+    }
+
+    if(location === ""){
+
+        message.innerHTML =
+        "Please enter a location.";
+
+        message.style.color = "red";
+
+        return;
+    }
+
+    if(description.length < 10){
+
+        message.innerHTML =
+        "Description must contain at least 10 characters.";
+
+        message.style.color = "red";
+
+        return;
+    }
+
+    message.innerHTML =
+    "Complaint submitted successfully!";
+
+    message.style.color = "green";
+
+    document.getElementById("wasteForm").reset();
+
+    document.getElementById("charCount")
+    .innerHTML = "Characters: 0";
+
+});
+/* =========================
+   COMPLAINT LOCATION
+========================= */
+
+document.getElementById("formLocationBtn")
+.addEventListener("click", () => {
+
+    const locationField =
+    document.getElementById("wasteLocation");
+
+    const status =
+    document.getElementById("locationStatus");
+
+    status.innerHTML =
+    "Detecting location...";
+
+    if(navigator.geolocation){
+
+        navigator.geolocation
+        .getCurrentPosition(
+
+        async(position)=>{
+
+            const lat =
+            position.coords.latitude;
+
+            const lon =
+            position.coords.longitude;
+
+            try{
+
+                const response =
+                await fetch(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+                );
+
+                const data =
+                await response.json();
+
+                locationField.value =
+                data.display_name;
+
+                status.innerHTML =
+                "Location detected successfully.";
+
+            }catch(error){
+
+                locationField.value =
+                `${lat}, ${lon}`;
+
+                status.innerHTML =
+                "Coordinates detected.";
+            }
+        });
+
+    } else {
+
+        status.innerHTML =
+        "Geolocation not supported.";
+    }
+});
+/* =========================
+   COMPLAINT IMAGE PREVIEW
+========================= */
+
+document.getElementById("complaintImage")
+.addEventListener("change",
+(event)=>{
+
+    const file =
+    event.target.files[0];
+
+    if(file){
+
+        const preview =
+        document.getElementById(
+        "complaintPreview"
+        );
+
+        preview.src =
+        URL.createObjectURL(file);
+
+        preview.classList.remove(
+        "hidden"
+        );
+    }
+});

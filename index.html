@@ -45,6 +45,7 @@
                 <a href="#workflow" class="transition hover:text-moss">Workflow</a>
                 <a href="#impact" class="transition hover:text-moss">Impact</a>
                 <a href="#citizen-services" class="transition hover:text-moss">Citizen Services</a>
+                <a href="#complaint-form" class="transition hover:text-moss">Report Waste</a>
                 <a href="#contact" class="transition hover:text-moss">Contact</a>
             </nav>
 
@@ -77,9 +78,10 @@
                 <a href="#workflow" class="transition hover:text-moss">Workflow</a>
                 <a href="#impact" class="transition hover:text-moss">Impact</a>
                 <a href="#citizen-services" class="transition hover:text-moss">Citizen Services</a>
+                <a href="#complaint-form" class="transition hover:text-moss">Report Waste</a>
                 <a href="#contact" class="transition hover:text-moss">Contact</a>
-<a href="#demo"
-    class="rounded-full bg-forest px-5 py-3 text-center text-sm font-semibold text-white">
+                <a href="#demo"
+                class="rounded-full bg-forest px-5 py-3 text-center text-sm font-semibold text-white">
     Launch Demo
 </a>
             </div>
@@ -529,6 +531,153 @@
     </div>
 
 </section>
+
+<!-- Waste Complaint Form -->
+
+<section id="complaint-form" class="px-6 py-20">
+
+    <div class="mx-auto max-w-4xl rounded-[2rem] bg-white p-8 shadow-lg">
+
+        <h2 class="text-center font-display text-4xl font-bold text-forest">
+            Waste Complaint Form
+        </h2>
+
+        <p class="mt-4 text-center text-forest/70">
+            Report waste-related issues directly to the municipality.
+        </p>
+
+        <form id="wasteForm" class="mt-8 space-y-6">
+
+            <div>
+                <label class="mb-2 block font-semibold text-forest">
+                    Citizen Name
+                </label>
+
+                <input
+                    type="text"
+                    id="citizenName"
+                    placeholder="Enter your name"
+                    class="w-full rounded-lg border p-3">
+            </div>
+
+            <div>
+                <label class="mb-2 block font-semibold text-forest">
+                    Waste Type
+                </label>
+
+                <select
+                    id="wasteType"
+                    class="w-full rounded-lg border p-3">
+
+                    <option value="">
+                        Select Waste Type
+                    </option>
+
+                    <option>
+                        Organic Waste
+                    </option>
+
+                    <option>
+                        Plastic Waste
+                    </option>
+
+                    <option>
+                        E-Waste
+                    </option>
+
+                    <option>
+                        Hazardous Waste
+                    </option>
+
+                </select>
+            </div>
+
+          <div>
+    <label class="mb-2 block font-semibold text-forest">
+        Location
+    </label>
+
+    <div class="flex gap-2">
+
+        <input
+            type="text"
+            id="wasteLocation"
+            placeholder="Enter location"
+            class="flex-1 rounded-lg border p-3">
+
+        <button
+            type="button"
+            id="formLocationBtn"
+            class="rounded-lg bg-forest px-4 text-white hover:bg-moss">
+
+            📍
+
+        </button>
+
+    </div>
+
+    <p
+        id="locationStatus"
+        class="mt-2 text-sm text-moss">
+    </p>
+</div>
+
+  <div>
+
+    <label class="mb-2 block font-semibold text-forest">
+        Waste Photo
+    </label>
+
+    <input
+        type="file"
+        id="complaintImage"
+        accept="image/*"
+        class="w-full rounded-lg border p-3">
+
+    <img
+        id="complaintPreview"
+        class="hidden mt-4 h-48 w-full rounded-xl border object-cover">
+
+</div>
+
+            <div>
+                <label class="mb-2 block font-semibold text-forest">
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    rows="5"
+                    placeholder="Describe the issue"
+                    class="w-full rounded-lg border p-3"></textarea>
+
+                <p
+                    id="charCount"
+                    class="mt-2 text-sm text-gray-500">
+                    Characters: 0
+                </p>
+            </div>
+
+            <button
+                type="submit"
+                class="rounded-lg bg-forest px-6 py-3 text-white hover:bg-moss">
+
+                Submit Complaint
+
+            </button>
+
+        </form>
+
+        <p
+            id="formMessage"
+            class="mt-4 font-semibold text-moss">
+        </p>
+
+    </div>
+
+</section>
+
+<footer id="contact"
 
     <footer id="contact" class="border-t border-forest/10 bg-forest px-6 py-12 text-white">
         <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.6fr_0.6fr]">
