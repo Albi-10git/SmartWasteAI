@@ -18,6 +18,50 @@ mobileMenu.querySelectorAll("a").forEach((link) => {
     });
 });
 
+/* =========================
+   ECO POINTS SYSTEM
+========================= */
+
+let ecoPoints =
+parseInt(
+localStorage.getItem("ecoPoints")
+) || 0;
+
+const ecoDisplay =
+document.getElementById(
+"ecoPointsDisplay"
+);
+
+const activityLog =
+document.getElementById(
+"activityLog"
+);
+
+ecoDisplay.textContent =
+ecoPoints;
+
+function addPoints(points, activity){
+
+    ecoPoints += points;
+
+    localStorage.setItem(
+        "ecoPoints",
+        ecoPoints
+    );
+
+    ecoDisplay.textContent =
+    ecoPoints;
+
+    const activityItem =
+    document.createElement("p");
+
+    activityItem.innerHTML =
+    `✓ ${activity} (+${points})`;
+
+    activityLog.prepend(
+    activityItem
+    );
+}
 
 /* =========================
    GEOLOCATION API
@@ -58,6 +102,10 @@ document.getElementById("locationBtn")
                 <strong>Current Location:</strong><br>
                 ${data.display_name}
                 `;
+                addPoints(
+                5,
+                "Location Detected"
+                );
 
             } catch (error) {
 
@@ -96,41 +144,12 @@ document.getElementById("wasteImage")
         URL.createObjectURL(file);
 
         preview.classList.remove("hidden");
-    }
+        addPoints(
+        10,
+        "Waste Image Uploaded"
+        );
+     }
 });
-
-
-/* =========================
-   LOCAL STORAGE API
-========================= */
-
-const savedPoints =
-localStorage.getItem("ecoPoints");
-
-if (savedPoints) {
-
-    document.getElementById("savedPoints")
-    .innerHTML =
-    `Stored Eco Points: ${savedPoints}`;
-}
-
-document.getElementById("savePoints")
-.addEventListener("click", () => {
-
-    const points =
-    document.getElementById("ecoPoints")
-    .value;
-
-    localStorage.setItem(
-        "ecoPoints",
-        points
-    );
-
-    document.getElementById("savedPoints")
-    .innerHTML =
-    `Stored Eco Points: ${points}`;
-});
-
 
 /* =========================
    CLIPBOARD API
@@ -239,6 +258,10 @@ document.getElementById("wasteForm")
     "Complaint submitted successfully!";
 
     message.style.color = "green";
+    addPoints(
+    20,
+    "Waste Complaint Submitted"
+    );
 
     document.getElementById("wasteForm").reset();
 
@@ -287,6 +310,10 @@ document.getElementById("formLocationBtn")
 
                 locationField.value =
                 data.display_name;
+                addPoints(
+               5,
+               "Complaint Location Detected"
+               );
 
                 status.innerHTML =
                 "Location detected successfully.";
@@ -332,4 +359,18 @@ document.getElementById("complaintImage")
         "hidden"
         );
     }
+});
+
+/* =========================
+   RECYCLING AWARENESS
+========================= */
+
+document.getElementById("recycleBtn")
+.addEventListener("click", () => {
+
+    addPoints(
+    10,
+    "Recycling Awareness Viewed"
+    );
+
 });

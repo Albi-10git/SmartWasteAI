@@ -444,31 +444,38 @@
 
             <!-- Eco Points -->
 
-            <div class="bg-white p-6 rounded-3xl shadow-lg">
-                <h3 class="font-bold text-xl mb-4 text-forest">
-                    🌱 Eco Points Tracker
-                </h3>
+           <div class="bg-white p-6 rounded-3xl shadow-lg">
 
-                <p class="text-sm text-gray-600 mb-4">
-                    Save and track sustainability points earned through eco-friendly actions.
-                </p>
+    <h3 class="font-bold text-xl mb-4 text-forest">
+        🌱 Eco Points Tracker
+    </h3>
 
-                <input
-                    id="ecoPoints"
-                    type="number"
-                    placeholder="Enter points earned"
-                    class="border p-2 rounded w-full">
+    <p class="text-sm text-gray-600 mb-4">
+        Eco Points are automatically awarded for sustainable activities.
+    </p>
 
-                <button
-                    id="savePoints"
-                    class="mt-4 bg-forest text-white px-4 py-2 rounded-lg hover:bg-moss">
-                    Save Activity
-                </button>
+    <div class="rounded-xl bg-mint p-4">
 
-                <p id="savedPoints"
-                    class="mt-4 font-medium text-moss">
-                </p>
-            </div>
+        <p class="text-sm text-forest/70">
+            Total Eco Points
+        </p>
+
+       <p
+       id="ecoPointsDisplay"
+       class="text-4xl font-bold text-forest">
+       0
+     </p>
+    </div>
+
+   <div
+    id="activityLog"
+    class="mt-4 text-sm text-forest">
+
+    No activities completed yet.
+
+   </div>
+
+</div>
 
             <!-- Complaint Tracking -->
 
@@ -521,9 +528,17 @@
                     Today's Eco Tip:
                 </p>
 
-                <div class="mt-4 rounded-xl bg-mint p-4 text-forest">
-                    Recycling one aluminum can saves enough energy to run a TV for nearly 3 hours.
-                </div>
+               <div class="mt-4 rounded-xl bg-mint p-4 text-forest">
+            Recycling one aluminum can saves enough energy to run a TV for nearly 3 hours.
+           </div>
+
+        <button
+        id="recycleBtn"
+        class="mt-4 bg-forest text-white px-4 py-2 rounded-lg hover:bg-moss">
+
+        Learn More
+
+        </button>
             </div>
 
         </div>
