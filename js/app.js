@@ -44,23 +44,21 @@ function addPoints(points, activity){
 
     ecoPoints += points;
 
-    localStorage.setItem(
-        "ecoPoints",
-        ecoPoints
-    );
+    localStorage.setItem("ecoPoints", ecoPoints);
 
-    ecoDisplay.textContent =
-    ecoPoints;
+    ecoDisplay.textContent = ecoPoints;
 
-    const activityItem =
-    document.createElement("p");
+    // Remove default message
+    if(activityLog.innerHTML.includes("No activities completed yet.")){
+        activityLog.innerHTML = "";
+    }
+
+    const activityItem = document.createElement("p");
 
     activityItem.innerHTML =
     `✓ ${activity} (+${points})`;
 
-    activityLog.prepend(
-    activityItem
-    );
+    activityLog.prepend(activityItem);
 }
 
 /* =========================
@@ -359,6 +357,45 @@ document.getElementById("complaintImage")
         "hidden"
         );
     }
+});
+/* =========================
+   INPUT EVENT
+========================= */
+
+const descriptionField =
+document.getElementById("description");
+
+descriptionField.addEventListener("input", () => {
+
+    document.getElementById("charCount").innerHTML =
+    "Characters: " +
+    descriptionField.value.length;
+
+});
+
+/* =========================
+   FOCUS EVENT
+========================= */
+
+descriptionField.addEventListener("focus", () => {
+
+    descriptionField.style.border =
+    "3px solid #2f6b45";
+
+    descriptionField.style.outline =
+    "none";
+
+});
+
+/* =========================
+   BLUR EVENT
+========================= */
+
+descriptionField.addEventListener("blur", () => {
+
+    descriptionField.style.border =
+    "1px solid #d1d5db";
+
 });
 
 /* =========================
