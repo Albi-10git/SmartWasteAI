@@ -253,18 +253,30 @@ document.getElementById("wasteForm")
     }
 
     message.innerHTML =
-    "Complaint submitted successfully!";
+"Complaint submitted successfully!";
 
-    message.style.color = "green";
-    addPoints(
-    20,
-    "Waste Complaint Submitted"
-    );
+message.style.color = "green";
 
-    document.getElementById("wasteForm").reset();
+addPoints(
+20,
+"Waste Complaint Submitted"
+);
 
-    document.getElementById("charCount")
-    .innerHTML = "Characters: 0";
+document.getElementById("wasteForm").reset();
+
+// Clear uploaded complaint image preview
+const complaintPreview =
+document.getElementById("complaintPreview");
+
+complaintPreview.src = "";
+complaintPreview.classList.add("hidden");
+
+// Clear location detection message
+document.getElementById("locationStatus").innerHTML = "";
+
+// Reset character counter
+document.getElementById("charCount").innerHTML =
+"Characters: 0";
 
 });
 /* =========================
