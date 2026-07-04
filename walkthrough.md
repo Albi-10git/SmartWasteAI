@@ -144,4 +144,4 @@ We verified that the registration endpoint saves user credentials in plaintext i
 
 We verified the complete login, signup, navbar states, dropdown details, and logout flow using the browser subagent. The session recording is saved and can be viewed here:
 
-![Authentication Flow Verification](C:/Users/Denzil/.gemini/antigravity/brain/ae140b3f-9a6f-474b-bae0-ec843ba1e954/verify_plaintext_flow_1783136507672.webp)
+![Authentication Flow Verification](./verify_auth_flow.webp)
