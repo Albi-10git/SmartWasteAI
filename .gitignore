@@ -1,0 +1,6 @@
+.skills-cache
+.skills-loaded.json
+.antigravityignore
+node_modules/
+*.log
+.env
