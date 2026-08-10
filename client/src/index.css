@@ -1,0 +1,7 @@
+body { margin: 0; min-width: 320px; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid rgba(159,232,112,.7); outline-offset: 3px; }
+input:not([type=radio]), select, textarea { border-color: rgba(18,53,36,.16) !important; color: #123524; }
+input:not([type=radio]):focus, select:focus, textarea:focus { border-color: #2f6b45 !important; box-shadow: 0 0 0 4px rgba(159,232,112,.25); outline: none; }
+.complaint-table tbody tr:hover { background: rgba(218,247,201,.35); }

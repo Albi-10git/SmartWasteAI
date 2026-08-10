@@ -1,0 +1,7 @@
+{
+  "name": "smartwasteai-workspace",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": ["client", "server"],
+  "scripts": { "client": "npm --workspace smartwasteai-client run dev", "server": "npm --workspace server run dev", "build": "npm --workspace smartwasteai-client run build" }
+}
